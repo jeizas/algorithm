@@ -23,5 +23,12 @@ public class BinarySortTreeTest {
         binarySortTree.addTreeNode(40);
 
         BinarySortTree.medOrderMethodOne(binarySortTree.root);
+
+        boolean isExit = BinarySortTree.searchForBinarySortTree(binarySortTree.root, 31);
+        System.out.println(isExit);
+
+        BinarySortTree.deleteForBinarySortTree(binarySortTree.root, 0);
+        BinarySortTree.medOrderMethodOne(binarySortTree.root);
+
     }
 }

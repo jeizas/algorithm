@@ -57,6 +57,99 @@ public class BinarySortTree {
         }
     }
 
+
+    /**
+     * 查找方法
+     * @param node
+     * @param key
+     * @return
+     */
+    public static boolean searchForBinarySortTree(TreeNode node, int key) {
+        if (node == null) {
+            return false;
+        }
+
+        if (node.data == key) {
+            return true;
+        } else if (node.data > key) {
+            return searchForBinarySortTree(node.left, key);
+        } else {
+            return searchForBinarySortTree(node.right, key);
+        }
+    }
+
+    /**
+     * 删除节点
+     * @param node
+     * @param key
+     * @return
+     */
+    public static boolean deleteForBinarySortTree(TreeNode node, int key) {
+        if (node == null) {
+             return false;
+        }
+        if (node.data == key) {
+            return deleteData(node);
+        } else if (node.data > key){
+            return deleteForBinarySortTree(node.left, key);
+        } else {
+            return deleteForBinarySortTree(node.right, key);
+        }
+     }
+
+    /**
+     * 删除指定的节点
+     * @param node
+     * @return
+     */
+    public static boolean deleteData(TreeNode node) {
+        if (node.left == null) {
+            node.parent.left = null;
+        } else if (node.right == null) {
+            node.parent.right = null;
+        } else {
+            TreeNode preNode = preNode(node);
+            node.data = preNode.data;
+            deleteForBinarySortTree(preNode, preNode.data);
+        }
+        return true;
+    }
+
+    /**
+     * 查找指定节点的前驱节点
+     * @param node
+     * @return
+     */
+    public static TreeNode preNode(TreeNode node) {
+        if(node == null) {
+            return null;
+        }
+        if(node.left!=null)
+            return getMax(node.left);
+        TreeNode p=node.parent;
+        while(p!=null&&p.left==node) {
+            node=p;
+            p=p.parent;
+        }
+        return p;
+    }
+
+    /**
+     * 查找指定节点的最大节点
+     * @param root
+     * @return
+     */
+    public static TreeNode getMax(TreeNode root) {
+        if(root==null) {
+            return null;
+        }
+
+        while(root.right!=null) {
+            root=root.right;
+        }
+        return root;
+    }
+
     /**
      * 递归实现中序遍历
      * @author linbingwen
