@@ -8,7 +8,7 @@ import com.jeizas.algorithm.Sort;
 public class SortTest {
 
     public static void main(String[] args) {
-        Sort sort = new Sort(new int[]{1,3,6,4,9,5,1});
-        sort.insertSort().output();
+        Sort sort = new Sort(new Integer[]{1, 3, 6, 4, 9, 5, 1, 12, 21, 26, 6, 1});
+        sort.binarySort().output();
     }
 }
