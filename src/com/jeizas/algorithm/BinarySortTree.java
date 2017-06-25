@@ -2,6 +2,8 @@ package com.jeizas.algorithm;
 
 import com.jeizas.model.TreeNode;
 
+import java.util.Stack;
+
 /**
  * 二叉排序树操作方法
  * Created by jeizas on 2017/4/21.
@@ -12,7 +14,7 @@ public class BinarySortTree {
     public int size;
 
     /**
-     * 二叉树中国插入节点
+     * 二叉树插入节点
      * @param data
      * @return
      */
@@ -167,4 +169,115 @@ public class BinarySortTree {
             }
         }
     }
+
+    /**
+     * 非递归中序遍历
+     */
+    public static void middleorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode node = root;
+
+        while (node != null || !stack.isEmpty()) {
+
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+
+            if (!stack.isEmpty()) {
+                node = stack.pop();
+                System.out.print(node.data + " ");
+                node = node.right;
+            }
+        }
+    }
+
+    /**
+     * 中续遍历 非递归
+     * @param root
+     */
+    public static void middleOrderTraversal2(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            } else {
+                node = stack.peek();
+                stack.pop();
+                System.out.print(node.data + " ");
+                node = node.right;
+            }
+        }
+    }
+
+    /**
+     * 先序遍历 非递归
+     */
+    public void nonRecursivePreOrder1() {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode current = root;
+
+        while (current != null || !stack.isEmpty()) {
+            if (current != null) {
+                stack.push(current);
+                System.out.print(current.data + " ");
+                current = current.left;
+            } else {
+                current = stack.peek();
+                stack.pop();
+                current = current.right;
+            }
+        }
+    }
+
+    public void nonRecursivePreOrder2() {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode current = root;
+
+        while (current != null || !stack.isEmpty()) {
+            while (current != null) {
+                System.out.print(current.data + " ");
+                stack.push(current);
+                current = current.left;
+            }
+
+            if (!stack.isEmpty()) {
+                current = stack.pop();
+                current = current.right;
+            }
+        }
+    }
+
+
+    /**
+     * 后序遍历 非递归
+     */
+    public void noRecursivePostOrder() {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode current = root;
+        TreeNode lastVisit = root;
+
+        while (current != null || !stack.isEmpty()) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+
+            current = stack.peek();
+
+            if (current.right == null || current.right == lastVisit) {
+                System.out.print(current.data + " ");
+                stack.pop();
+                lastVisit = current;
+                current = null;
+            } else {
+                current = current.right;
+            }
+
+        }
+    }
+
 }

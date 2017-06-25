@@ -22,13 +22,18 @@ public class BinarySortTreeTest {
         binarySortTree.addTreeNode(100);
         binarySortTree.addTreeNode(40);
 
-        BinarySortTree.medOrderMethodOne(binarySortTree.root);
+//        BinarySortTree.medOrderMethodOne(binarySortTree.root);
+//        BinarySortTree.middleOrderTraversal1(binarySortTree.root);
+//        BinarySortTree.middleOrderTraversal2(binarySortTree.root);
+//        binarySortTree.nonRecursivePreOrder();
+//        binarySortTree.noRecursivePostOrder();
+        binarySortTree.nonRecursivePreOrder2();
 
-        boolean isExit = BinarySortTree.searchForBinarySortTree(binarySortTree.root, 31);
-        System.out.println(isExit);
-
-        BinarySortTree.deleteForBinarySortTree(binarySortTree.root, 0);
-        BinarySortTree.medOrderMethodOne(binarySortTree.root);
+//        boolean isExit = BinarySortTree.searchForBinarySortTree(binarySortTree.root, 31);
+//        System.out.println(isExit);
+//
+//        BinarySortTree.deleteForBinarySortTree(binarySortTree.root, 0);
+//        BinarySortTree.medOrderMethodOne(binarySortTree.root);
 
     }
 }
