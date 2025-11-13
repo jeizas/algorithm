@@ -86,12 +86,14 @@ public class BinarySortTree {
      * @param key
      * @return
      */
-    public static boolean deleteForBinarySortTree(TreeNode node, int key) {
+    public boolean deleteForBinarySortTree(TreeNode node, int key) {
         if (node == null) {
              return false;
         }
         if (node.data == key) {
-            return deleteData(node);
+            deleteData(node);
+            size--;
+            return true;
         } else if (node.data > key){
             return deleteForBinarySortTree(node.left, key);
         } else {
@@ -101,20 +103,54 @@ public class BinarySortTree {
 
     /**
      * 删除指定的节点
-     * @param node
-     * @return
+     * @param node 要删除的节点
      */
-    public static boolean deleteData(TreeNode node) {
-        if (node.left == null) {
-            node.parent.left = null;
-        } else if (node.right == null) {
-            node.parent.right = null;
-        } else {
-            TreeNode preNode = preNode(node);
-            node.data = preNode.data;
-            deleteForBinarySortTree(preNode, preNode.data);
+    private void deleteData(TreeNode node) {
+        // 情况1: 节点没有子节点
+        if (node.left == null && node.right == null) {
+            if (node == root) {
+                root = null;
+            } else if (node.parent.left == node) {
+                node.parent.left = null;
+            } else {
+                node.parent.right = null;
+            }
         }
-        return true;
+        // 情况2: 节点只有右子节点
+        else if (node.left == null) {
+            if (node == root) {
+                root = node.right;
+                root.parent = null;
+            } else if (node.parent.left == node) {
+                node.parent.left = node.right;
+                node.right.parent = node.parent;
+            } else {
+                node.parent.right = node.right;
+                node.right.parent = node.parent;
+            }
+        }
+        // 情况3: 节点只有左子节点
+        else if (node.right == null) {
+            if (node == root) {
+                root = node.left;
+                root.parent = null;
+            } else if (node.parent.left == node) {
+                node.parent.left = node.left;
+                node.left.parent = node.parent;
+            } else {
+                node.parent.right = node.left;
+                node.left.parent = node.parent;
+            }
+        }
+        // 情况4: 节点有两个子节点
+        else {
+            // 找到前驱节点（左子树的最大节点）
+            TreeNode predecessor = preNode(node);
+            // 用前驱节点的值替换当前节点的值
+            node.data = predecessor.data;
+            // 递归删除前驱节点（前驱节点最多只有一个左子节点）
+            deleteData(predecessor);
+        }
     }
 
     /**

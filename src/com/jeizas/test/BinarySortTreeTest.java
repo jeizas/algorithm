@@ -29,11 +29,18 @@ public class BinarySortTreeTest {
 //        binarySortTree.noRecursivePostOrder();
         binarySortTree.nonRecursivePreOrder2();
 
-//        boolean isExit = BinarySortTree.searchForBinarySortTree(binarySortTree.root, 31);
-//        System.out.println(isExit);
-//
-//        BinarySortTree.deleteForBinarySortTree(binarySortTree.root, 0);
-//        BinarySortTree.medOrderMethodOne(binarySortTree.root);
+        boolean isExit = BinarySortTree.searchForBinarySortTree(binarySortTree.root, 31);
+        System.out.println("查找31: " + isExit);
+
+        System.out.println("\n删除前中序遍历:");
+        BinarySortTree.medOrderMethodOne(binarySortTree.root);
+
+        System.out.println("\n删除节点80");
+        binarySortTree.deleteForBinarySortTree(binarySortTree.root, 80);
+
+        System.out.println("删除后中序遍历:");
+        BinarySortTree.medOrderMethodOne(binarySortTree.root);
+        System.out.println("\n树的大小: " + binarySortTree.size);
 
     }
 }

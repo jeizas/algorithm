@@ -24,7 +24,7 @@ public class Sort {
             if (arr[i] < arr[i-1]) {
                 int tmp = arr[i];
                 int j = i - 1;
-                for (; j > 0 && tmp < arr[j]; j--) {
+                for (; j >= 0 && tmp < arr[j]; j--) {
                     arr[j+1] = arr[j];
                 }
                 arr[j+1] = tmp;
