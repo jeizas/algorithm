@@ -24,7 +24,7 @@ public class Sort {
             if (arr[i] < arr[i-1]) {
                 int tmp = arr[i];
                 int j = i - 1;
-                for (; j > 0 && tmp < arr[j]; j--) {
+                for (; j >= 0 && tmp < arr[j]; j--) {
                     arr[j+1] = arr[j];
                 }
                 arr[j+1] = tmp;
@@ -40,12 +40,15 @@ public class Sort {
      */
     public Sort bubbleSort() {
         for (int j=0; j<len; j++) {
+            boolean swapped = false;
             for (int i = 1; i < len-j; i++) {
                 if (arr[i] < arr[i - 1]) {
-                    int tmp = arr[i];
-                    arr[i] = arr[i - 1];
-                    arr[i - 1] = tmp;
+                    swap(i, i - 1);
+                    swapped = true;
                 }
+            }
+            if (!swapped) {
+                break;
             }
         }
         return this;
@@ -78,8 +81,7 @@ public class Sort {
      */
     public Sort binarySort() {
         for (int i = 1; i < len; i++) {
-//            int desIndes = binarySearch(i, arr[i]);
-            int desIndes = binarySearch(0, i-1, arr[i], 0);
+            int desIndes = binarySearch(0, i-1, arr[i]);
             int tmp = arr[i];
             for (int j = i; j > desIndes; j--) {
                 arr[j] = arr[j-1];
@@ -91,48 +93,27 @@ public class Sort {
 
     /**
      * 二分查找
-     * 非递归
+     * 递归 在有序区间 arr[leftIndex..rightIndex] 中查找 desValue 的插入位置，
+     * 相等时插到相等元素之后，保证排序稳定
      * @return
      */
-    private int binarySearch(int rightIndex, int desValue) {
-        if (rightIndex > len || rightIndex < 1)
-            return -1;
-        int leftIndex = 0;
-        int middleIndex = 0;
-        while (leftIndex <= rightIndex) {
-            middleIndex = (leftIndex + rightIndex) / 2;
-            if (desValue < arr[middleIndex]) {
-                rightIndex = middleIndex -1;
-            } else {
-                leftIndex = middleIndex + 1;
-            }
-        }
-
-        return middleIndex;
-    }
-
-    /**
-     * 二分查找
-     * 递归 结束条件：边界正常结束或边界
-     * @return
-     */
-    public int binarySearch(int leftIndex, int rightIndex, int desValue,int flag) {
+    public int binarySearch(int leftIndex, int rightIndex, int desValue) {
         if (desValue < arr[leftIndex]) {
             return leftIndex;
         }
         if (desValue > arr[rightIndex]) {
             return rightIndex + 1;
         }
-        //经过上述两个条件判断后，由左边部分得到的desValue一定大于下边对应的值，反之小于
+        //经过上述两个条件判断后，arr[leftIndex] <= desValue <= arr[rightIndex]，只剩一个元素时它一定等于 desValue
         if (leftIndex == rightIndex) {
-            return rightIndex + flag;
+            return rightIndex + 1;
         }
 
         int middleIndex = (leftIndex + rightIndex) / 2;
         if (desValue < arr[middleIndex]) {
-            return binarySearch(leftIndex, middleIndex -1, desValue, 1);
+            return binarySearch(leftIndex, middleIndex -1, desValue);
         } else {
-            return binarySearch(middleIndex +1, rightIndex, desValue, -1);
+            return binarySearch(middleIndex +1, rightIndex, desValue);
         }
     }
 
