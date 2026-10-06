@@ -18,7 +18,7 @@ public class BinarySortTree {
      * @param data
      * @return
      */
-    public boolean addTreeNode(Integer data) {
+    public boolean addTreeNode(int data) {
 
         TreeNode treeNode = new TreeNode(data);
 
@@ -82,38 +82,38 @@ public class BinarySortTree {
 
     /**
      * 删除节点
-     * @param node
      * @param key
      * @return
      */
-    public static boolean deleteForBinarySortTree(TreeNode node, int key) {
+    public boolean deleteTreeNode(int key) {
+        TreeNode node = root;
+        while (node != null && node.data != key) {
+            node = node.data > key ? node.left : node.right;
+        }
         if (node == null) {
-             return false;
+            return false;
         }
-        if (node.data == key) {
-            return deleteData(node);
-        } else if (node.data > key){
-            return deleteForBinarySortTree(node.left, key);
-        } else {
-            return deleteForBinarySortTree(node.right, key);
-        }
-     }
 
-    /**
-     * 删除指定的节点
-     * @param node
-     * @return
-     */
-    public static boolean deleteData(TreeNode node) {
-        if (node.left == null) {
-            node.parent.left = null;
-        } else if (node.right == null) {
-            node.parent.right = null;
-        } else {
+        // 有两个孩子：用前驱的值替换当前节点，转为删除前驱，前驱没有右孩子
+        if (node.left != null && node.right != null) {
             TreeNode preNode = preNode(node);
             node.data = preNode.data;
-            deleteForBinarySortTree(preNode, preNode.data);
+            node = preNode;
         }
+
+        // 此时 node 最多只有一个孩子，用孩子顶替 node 在父节点中的位置
+        TreeNode child = node.left != null ? node.left : node.right;
+        if (child != null) {
+            child.parent = node.parent;
+        }
+        if (node.parent == null) {
+            root = child;
+        } else if (node.parent.left == node) {
+            node.parent.left = child;
+        } else {
+            node.parent.right = child;
+        }
+        size --;
         return true;
     }
 
