@@ -1,0 +1,1 @@
+{ "name": "mvn-test", "version": "0.1.0", "description": "/test 斜杠命令：运行 mvn test 并汇总结果" }
